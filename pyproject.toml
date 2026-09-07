@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reviewrisk"
+version = "0.1.0"
+description = "Offline-first pull-request risk scanner for open-source maintainers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Your Name"}]
+keywords = ["github", "security", "open-source", "pull-request", "maintainers", "supply-chain"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Security",
+]
+
+[project.scripts]
+reviewrisk = "reviewrisk.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/<your-github-username>/reviewrisk"
+Repository = "https://github.com/<your-github-username>/reviewrisk"
+Issues = "https://github.com/<your-github-username>/reviewrisk/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
