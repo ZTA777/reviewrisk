@@ -57,6 +57,14 @@ SECRET_PATTERNS = [
     ("aws-access-key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
 ]
 
+KNOWN_PLACEHOLDER_SECRETS = {
+    "AKIAIOSFODNN7EXAMPLE",
+}
+PLACEHOLDER_SECRET_MARKER = re.compile(
+    r"(?:^|[_-])(?:example|placeholder|dummy|changeme|replace(?:[_-]me)?|your[_-](?:token|key|secret))(?:[_-]|$)",
+    re.I,
+)
+
 DANGEROUS_SHELL = [
     ("pipe-to-shell", re.compile(r"\b(?:curl|wget)\b[^\n|]*\|\s*(?:sudo\s+)?(?:sh|bash)\b", re.I)),
     ("decoded-shell", re.compile(r"\bbase64\b[^\n|]*(?:-d|--decode)[^\n|]*\|\s*(?:sh|bash)\b", re.I)),
@@ -145,7 +153,8 @@ def scan_diff(diff_text: str) -> ScanResult:
         added = line[1:]
 
         for rule, pattern in SECRET_PATTERNS:
-            if pattern.search(added):
+            match = pattern.search(added)
+            if match and not _looks_like_placeholder_secret(match.group(0)):
                 findings.append(Finding("critical", rule, current_file, "Possible credential or private key added", _redact(added)))
 
         for rule, pattern in DANGEROUS_SHELL:
@@ -167,6 +176,16 @@ def scan_diff(diff_text: str) -> ScanResult:
             findings.append(Finding("high", "package-lifecycle-script", current_file, "Package lifecycle script added or changed", added.strip()[:180]))
 
     return ScanResult(findings=_dedupe(findings), files_changed=len(changed_files))
+
+
+def _looks_like_placeholder_secret(value: str) -> bool:
+    if value.upper() in KNOWN_PLACEHOLDER_SECRETS:
+        return True
+    if PLACEHOLDER_SECRET_MARKER.search(value):
+        return True
+
+    body = re.sub(r"^(?:gh[pousr]_|sk-)", "", value, flags=re.I)
+    return bool(re.fullmatch(r"(?:x{16,}|0{16,})", body, re.I))
 
 
 def _redact(text: str) -> str:
