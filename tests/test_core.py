@@ -53,6 +53,21 @@ class ScanDiffTests(unittest.TestCase):
         self.assertNotIn("ghp_abcdefghijklmnopqrstuvwxyz123456", finding.evidence)
         self.assertEqual(finding.severity, "critical")
 
+    def test_ignores_obvious_secret_placeholders(self):
+        diff = """diff --git a/docs/example.env b/docs/example.env
+--- /dev/null
++++ b/docs/example.env
+@@ -0,0 +1,3 @@
++GITHUB_TOKEN=ghp_your_token_here_123456789012345
++OPENAI_API_KEY=sk-placeholder_key_12345678901234567890
++AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+"""
+        result = scan_diff(diff)
+        rules = {f.rule for f in result.findings}
+        self.assertNotIn("github-token", rules)
+        self.assertNotIn("openai-key", rules)
+        self.assertNotIn("aws-access-key", rules)
+
     def test_clean_diff(self):
         diff = """diff --git a/docs/guide.md b/docs/guide.md
 --- a/docs/guide.md

@@ -19,7 +19,7 @@ Open-source maintainers routinely review changes that can alter the trust bounda
 - Release/deployment automation paths
 - `curl | sh`, `wget | bash`, decoded shell pipelines, and `chmod 777`
 - Newly introduced executable files
-- Common credential shapes, with redacted evidence in reports
+- Common credential shapes, with obvious placeholders ignored and evidence redacted in reports
 
 The rule set is intentionally small and explainable. False-positive resistance is more valuable than a giant opaque score.
 
