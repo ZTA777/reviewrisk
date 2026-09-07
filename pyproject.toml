@@ -9,7 +9,7 @@ description = "Offline-first pull-request risk scanner for open-source maintaine
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-authors = [{name = "Your Name"}]
+authors = [{name = "Stephen Summers"}]
 keywords = ["github", "security", "open-source", "pull-request", "maintainers", "supply-chain"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -27,9 +27,9 @@ classifiers = [
 reviewrisk = "reviewrisk.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/<your-github-username>/reviewrisk"
-Repository = "https://github.com/<your-github-username>/reviewrisk"
-Issues = "https://github.com/<your-github-username>/reviewrisk/issues"
+Homepage = "https://github.com/ZTA777/reviewrisk"
+Repository = "https://github.com/ZTA777/reviewrisk"
+Issues = "https://github.com/ZTA777/reviewrisk/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

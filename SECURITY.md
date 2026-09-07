@@ -4,7 +4,7 @@
 
 Please use GitHub's private vulnerability reporting feature for this repository when available:
 
-`https://github.com/<your-github-username>/reviewrisk/security/advisories/new`
+`https://github.com/ZTA777/reviewrisk/security/advisories/new`
 
 Do not include real credentials, access tokens, or private source code in a report. Use synthetic examples.
 
